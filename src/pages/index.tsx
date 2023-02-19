@@ -31,8 +31,10 @@ const MainMap = () => {
           initialViewState={initialViewState}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           onMoveEnd={async (e) => {
-            const mapBounds = e.target.getBounds();
-            await loadParkingLots(mapBounds);
+            if (e.target.getZoom() > 14) {
+              const mapBounds = e.target.getBounds();
+              await loadParkingLots(mapBounds);
+            }
           }}
         >
           <Source id="data" type="geojson" data={parkingLots}>

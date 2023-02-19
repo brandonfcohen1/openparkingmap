@@ -6,7 +6,7 @@ export const overpassQuery = async (bounds: LngLatBounds) => {
 
   const body = `
   [out:json][bbox:${bbox}];
-(way[amenity=parking];)->.x1;nwr.x1->.result;
+(way[amenity=parking][parking=surface];)->.x1;nwr.x1->.result;
 (.result; - .done;)->.result;
 .result out 250 meta geom qt;
   `;
