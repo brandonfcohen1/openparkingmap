@@ -1,4 +1,4 @@
-// import "@/styles/globals.css";
+import "@/styles/globals.css";
 import "@/styles/Map.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import type { AppProps } from "next/app";
