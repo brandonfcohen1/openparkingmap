@@ -8,7 +8,7 @@ export const overpassQuery = async (bounds: LngLatBounds) => {
   [out:json][bbox:${bbox}];
 (way[amenity=parking][parking=surface];)->.x1;nwr.x1->.result;
 (.result; - .done;)->.result;
-.result out 250 meta geom qt;
+.result out meta geom qt;
   `;
 
   const response = await fetch("https://overpass-api.de/api/interpreter", {
