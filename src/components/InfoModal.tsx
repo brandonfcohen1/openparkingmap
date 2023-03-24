@@ -122,22 +122,18 @@ export default function InfoModal({
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <a
-                    href="EnvelopeIconto:example@example.com"
+                    href="mailto:brandon@openparkingmap.com"
                     className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                    target={"_blank"}
                   >
                     <EnvelopeIcon className="w-5 h-5" />
                   </a>
                   <a
-                    href="https://github.com/username/repository"
+                    href="https://github.com/brandonfcohen1/openparkingmap/"
                     className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 mr-2"
+                    target={"_blank"}
                   >
                     <GithubIcon className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://github.com/username/repository"
-                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 mr-2"
-                  >
-                    <LinkedinIcon className="w-5 h-5" />
                   </a>
                 </div>
               </Dialog.Panel>
