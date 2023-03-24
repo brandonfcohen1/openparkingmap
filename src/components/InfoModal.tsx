@@ -43,7 +43,7 @@ export default function InfoModal({
   return (
     <Dialog
       as="div"
-      className="relative z-10"
+      className="relative z-100"
       initialFocus={cancelButtonRef}
       onClose={() => setShowInfoModal(false)}
       open={showInfoModal}
