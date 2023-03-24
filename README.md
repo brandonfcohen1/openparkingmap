@@ -12,6 +12,6 @@ Feel free to contribute to the project.
 
 Get in touch with me below.
 
-[Github](https://github.com/brandonfcohen1)
-[LinkedIn](https://www.linkedin.com/in/brandonfcohen/)
+[Github](https://github.com/brandonfcohen1)\
+[LinkedIn](https://www.linkedin.com/in/brandonfcohen/)\
 [CivilGrid](https://www.civilgrid.com/)
