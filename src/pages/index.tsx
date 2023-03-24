@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import mapboxgl, { LngLatBounds } from "mapbox-gl";
+import { LngLatBounds } from "mapbox-gl";
 import { overpassQuery } from "@/overpass/overpass";
 import { FeatureCollection } from "geojson";
-import Map, { Source, Layer, useMap } from "react-map-gl";
 import { Window } from "../components/Window";
-import LoadingOverlay from "../components/LoadingOverlay";
 import { analyzeParking } from "@/analysis/analyzeParking";
-import { lngLatBoundsToPolygon } from "@/analysis/latLngBoundsToPolygon";
-import ZoomModal from "@/components/ZoomModal";
-import InfoModal from "@/components/InfoModal";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiYnJhbmRvbmZjb2hlbiIsImEiOiJjbGZsdXA3Y3cwMHh5NDBwZ29tZmwwMHF5In0.5WrHreoWQq-cjrHoVt4P-w";
+import { MainMap } from "@/components/MainMap";
 
 const initialViewState = {
   longitude: -118.482505,
@@ -19,7 +13,7 @@ const initialViewState = {
   zoom: 14,
 };
 
-const MainMap = () => {
+export const MainPage = () => {
   const [bounds, setBounds] = useState<LngLatBounds>();
   const [savedBounds, setSavedBounds] = useState<LngLatBounds>();
   const [loading, setLoading] = useState(false);
@@ -65,63 +59,24 @@ const MainMap = () => {
           windowBoundArea={windowBoundArea}
           setShowInfoModal={setShowInfoModal}
         />
-        <div className="map-container">
-          {loading && <LoadingOverlay />}
-          {showZoomModal && (
-            <ZoomModal
-              showZoomModal={showZoomModal}
-              setShowZoomModal={setShowZoomModal}
-            />
-          )}
-          {showInfoModal && (
-            <InfoModal
-              showInfoModal={showInfoModal}
-              setShowInfoModal={setShowInfoModal}
-            />
-          )}
-          <Map
-            initialViewState={initialViewState}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-            onMoveEnd={async (e) => {
-              setBounds(e.target.getBounds());
-              setZoom(e.target.getZoom());
-            }}
-            onRender={(e) => {
-              setBounds(e.target.getBounds());
-            }}
-          >
-            <Source type="geojson" data={parkingLots}>
-              <Layer
-                id="parkingData"
-                type="fill"
-                paint={{
-                  "fill-color": "red",
-                  "fill-opacity": 0.8,
-                  "fill-outline-color": "black",
-                }}
-              />
-            </Source>
-            {savedBounds && (
-              <Source
-                id="bounds-polygon"
-                type="geojson"
-                data={lngLatBoundsToPolygon(savedBounds)}
-              >
-                <Layer
-                  id="bounds-polygon-layer"
-                  type="line"
-                  paint={{
-                    "line-color": "blue",
-                    "line-width": 2,
-                  }}
-                />
-              </Source>
-            )}
-          </Map>
-        </div>
+        <MainMap
+          showZoomModal={showZoomModal}
+          setShowZoomModal={setShowZoomModal}
+          showInfoModal={showInfoModal}
+          setShowInfoModal={setShowInfoModal}
+          loading={loading}
+          parkingLots={parkingLots}
+          bounds={bounds}
+          savedBounds={savedBounds}
+          zoom={zoom}
+          setBounds={setBounds}
+          setSavedBounds={setSavedBounds}
+          setZoom={setZoom}
+          initialViewState={initialViewState}
+        />
       </div>
     </>
   );
 };
 
-export default MainMap;
+export default MainPage;
