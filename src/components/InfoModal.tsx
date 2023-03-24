@@ -83,18 +83,18 @@ export default function InfoModal({
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          This project was inspired by reading{" "}
+                          {` This project was inspired by reading `}
                           <a
                             className="text-blue-600 hover:text-blue-800"
                             href="https://www.amazon.com/High-Cost-Free-Parking-Updated/dp/193236496X"
                           >
-                            The High Cost of Free Parking
+                            {` The High Cost of Free Parking`}
                           </a>
-                          , by Donald Shoup. From the description:
+                          {`, by Donald Shoup. From the description:`}
                           <br />
                           <br />
                           <blockquote className="pl-4 border-l-2 border-gray-400">
-                            Planners mandate free parking to alleviate
+                            {`Planners mandate free parking to alleviate
                             congestion but end up distorting transportation
                             choices, debasing urban design, damaging the
                             economy, and degrading the environment. Ubiquitous
@@ -102,19 +102,19 @@ export default function InfoModal({
                             a scale fit more for cars than for people, and why
                             American motor vehicles now consume one-eighth of
                             the world's total oil production. But it doesn't
-                            have to be this way.
+                            have to be this way.`}
                           </blockquote>
                           <br />
                           <a
                             className="text-blue-600 hover:text-blue-800"
                             href="https://www.nytimes.com/2023/03/07/business/fewer-parking-spots.html"
                           >
-                            Here's
+                            {`Here's`}
                           </a>{" "}
-                          a good recent NYT article on the subject.
+                          {`a good recent NYT article on the subject.`}
                           <br />
                           <br />
-                          Get in touch with me below.
+                          {`Get in touch with me below.`}
                         </p>
                       </div>
                     </div>
