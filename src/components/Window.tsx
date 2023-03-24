@@ -64,6 +64,17 @@ export const Window = ({
                   <br />
                   <b>% of window: </b>
                   {((parkingArea / windowBoundArea) * 100).toFixed(1)} %
+                  <br />
+                  <br />
+                  <div className="max-w-sm w-44 text-xs italic">
+                    {`Data is pulled from OpenStreetMap. `}
+                    <a
+                      onClick={() => setShowInfoModal(true)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Details here.
+                    </a>
+                  </div>
                 </Disclosure.Panel>
               </>
             )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LngLatBounds } from "mapbox-gl";
 import { overpassQuery } from "@/overpass/overpass";
 import { FeatureCollection } from "geojson";
@@ -23,12 +23,12 @@ export const MainPage = () => {
   } as FeatureCollection);
   const [parkingArea, setParkingArea] = useState(0);
   const [windowBoundArea, setWindowBoundArea] = useState(0);
-  const [zoom, setZoom] = useState(initialViewState.zoom);
   const [showZoomModal, setShowZoomModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [viewport, setViewport] = useState(initialViewState);
 
   const handleParkingSearch = async () => {
-    if (zoom < 14) {
+    if (viewport.zoom < 13) {
       setShowZoomModal(true);
       return;
     }
@@ -66,13 +66,10 @@ export const MainPage = () => {
           setShowInfoModal={setShowInfoModal}
           loading={loading}
           parkingLots={parkingLots}
-          bounds={bounds}
           savedBounds={savedBounds}
-          zoom={zoom}
           setBounds={setBounds}
-          setSavedBounds={setSavedBounds}
-          setZoom={setZoom}
-          initialViewState={initialViewState}
+          viewport={viewport}
+          setViewport={setViewport}
         />
       </div>
     </>

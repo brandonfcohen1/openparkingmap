@@ -1,54 +1,51 @@
 import React, { useEffect, useRef } from "react";
 import mapboxgl, { LngLatBounds } from "mapbox-gl";
 import { FeatureCollection } from "geojson";
-import Map, { Source, Layer } from "react-map-gl";
+import Map, { Source, Layer, GeolocateControl } from "react-map-gl";
 import InfoModal from "./InfoModal";
 import LoadingOverlay from "./LoadingOverlay";
 import ZoomModal from "./ZoomModal";
 import { lngLatBoundsToPolygon } from "@/analysis/latLngBoundsToPolygon";
-import MapboxGeocoder, { GeocoderOptions } from "@mapbox/mapbox-gl-geocoder";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYnJhbmRvbmZjb2hlbiIsImEiOiJjbGZsdXA3Y3cwMHh5NDBwZ29tZmwwMHF5In0.5WrHreoWQq-cjrHoVt4P-w";
 
+interface Viewport {
+  longitude: number;
+  latitude: number;
+  zoom: number;
+}
+
 interface MainMapProps {
   parkingLots: FeatureCollection;
   loading: boolean;
-  bounds: LngLatBounds | undefined;
   savedBounds: LngLatBounds | undefined;
-  zoom: number;
-  setZoom: (zoom: number) => void;
   showZoomModal: boolean;
   showInfoModal: boolean;
   setShowZoomModal: (showZoomModal: boolean) => void;
   setShowInfoModal: (showInfoModal: boolean) => void;
   setBounds: (bounds: LngLatBounds) => void;
-  setSavedBounds: (savedBounds: LngLatBounds) => void;
-  initialViewState: {
-    longitude: number;
-    latitude: number;
-    zoom: number;
-  };
+  viewport: Viewport;
+  setViewport: (viewport: Viewport) => void;
 }
 
 export const MainMap = ({
   parkingLots,
   loading,
-  bounds,
   savedBounds,
-  zoom,
-  setZoom,
   showZoomModal,
   showInfoModal,
   setShowZoomModal,
   setShowInfoModal,
   setBounds,
-  setSavedBounds,
-  initialViewState,
+  viewport,
+  setViewport,
 }: MainMapProps) => {
   const mapRef = useRef<any>(null);
   const geocoderContainerRef = useRef<any>(null);
+  const geolocateControlRef = useRef<any>(null);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -91,18 +88,36 @@ export const MainMap = ({
       )}
 
       <Map
-        initialViewState={initialViewState}
+        initialViewState={viewport}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         onMoveEnd={async (e) => {
           setBounds(e.target.getBounds());
-          setZoom(e.target.getZoom());
+          setViewport({
+            longitude: e.target.getCenter().lng,
+            latitude: e.target.getCenter().lat,
+            zoom: e.target.getZoom(),
+          });
         }}
         onRender={(e) => {
           setBounds(e.target.getBounds());
         }}
         ref={mapRef}
       >
-        <div ref={geocoderContainerRef} className="z-1 fixed top-4 right-4" />
+        <div className="z-1 absolute bottom-4 left-4">
+          <GeolocateControl
+            ref={geolocateControlRef}
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation={true}
+            onGeolocate={(pos) => {
+              setViewport({
+                ...viewport,
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+              });
+            }}
+          />
+        </div>
+        <div ref={geocoderContainerRef} className="z-1 fixed top-2 right-12" />
         <Source type="geojson" data={parkingLots}>
           <Layer
             id="parkingData"
