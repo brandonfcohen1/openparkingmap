@@ -13,12 +13,12 @@ export default function Modal({ showZoomModal, setShowZoomModal }: ModalProps) {
   return (
     <Dialog
       as="div"
-      className="relative z-10"
+      className="relative z-100"
       initialFocus={cancelButtonRef}
       onClose={() => setShowZoomModal(false)}
       open={showZoomModal}
     >
-      <div className="fixed inset-0 z-100 overflow-y-auto">
+      <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
