@@ -16,6 +16,7 @@ export default function Modal({ showZoomModal, setShowZoomModal }: ModalProps) {
       className="relative z-10"
       initialFocus={cancelButtonRef}
       onClose={() => setShowZoomModal(false)}
+      open={showZoomModal}
     >
       <div className="fixed inset-0 z-100 overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
