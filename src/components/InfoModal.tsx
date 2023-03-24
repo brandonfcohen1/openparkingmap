@@ -1,5 +1,5 @@
-import { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { useRef } from "react";
+import { Dialog } from "@headlessui/react";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 
 import React from "react";
@@ -41,60 +41,39 @@ export default function InfoModal({
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={showInfoModal} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        initialFocus={cancelButtonRef}
-        onClose={() => setShowInfoModal(false)}
-      >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 z-100 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
+    <Dialog
+      as="div"
+      className="relative z-10"
+      initialFocus={cancelButtonRef}
+      onClose={() => setShowInfoModal(false)}
+      open={showInfoModal}
+    >
+      <div className="fixed inset-0 z-100 overflow-y-auto">
+        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="sm:flex sm:items-start">
+                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-base font-semibold leading-6 text-gray-900"
+                  >
+                    OpenParkingMap
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <div className="text-sm text-gray-500">
+                      {` This project was inspired by reading `}
+                      <a
+                        className="text-blue-600 hover:text-blue-800"
+                        href="https://www.amazon.com/High-Cost-Free-Parking-Updated/dp/193236496X"
                       >
-                        OpenParkingMap
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <div className="text-sm text-gray-500">
-                          {` This project was inspired by reading `}
-                          <a
-                            className="text-blue-600 hover:text-blue-800"
-                            href="https://www.amazon.com/High-Cost-Free-Parking-Updated/dp/193236496X"
-                          >
-                            {` The High Cost of Free Parking`}
-                          </a>
-                          {`, by Donald Shoup. From the description:`}
-                          <br />
-                          <br />
-                          <blockquote className="pl-4 border-l-2 border-gray-400">
-                            {`Planners mandate free parking to alleviate
+                        {` The High Cost of Free Parking`}
+                      </a>
+                      {`, by Donald Shoup. From the description:`}
+                      <br />
+                      <br />
+                      <blockquote className="pl-4 border-l-2 border-gray-400">
+                        {`Planners mandate free parking to alleviate
                             congestion but end up distorting transportation
                             choices, debasing urban design, damaging the
                             economy, and degrading the environment. Ubiquitous
@@ -103,46 +82,44 @@ export default function InfoModal({
                             American motor vehicles now consume one-eighth of
                             the world's total oil production. But it doesn't
                             have to be this way.`}
-                          </blockquote>
-                          <br />
-                          <a
-                            className="text-blue-600 hover:text-blue-800"
-                            href="https://www.nytimes.com/2023/03/07/business/fewer-parking-spots.html"
-                          >
-                            {`Here's`}
-                          </a>{" "}
-                          {`a good recent NYT article on the subject.`}
-                          <br />
-                          <br />
-                          {`Get in touch with me below.`}
-                        </div>
-                      </div>
+                      </blockquote>
+                      <br />
+                      <a
+                        className="text-blue-600 hover:text-blue-800"
+                        href="https://www.nytimes.com/2023/03/07/business/fewer-parking-spots.html"
+                      >
+                        {`Here's`}
+                      </a>{" "}
+                      {`a good recent NYT article on the subject.`}
+                      <br />
+                      <br />
+                      {`Get in touch with me below.`}
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <a
-                    href="mailto:brandon@openparkingmap.com"
-                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <EnvelopeIcon className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://github.com/brandonfcohen1/openparkingmap/"
-                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 mr-2"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <GithubIcon className="w-5 h-5" />
-                  </a>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
+              </div>
+            </div>
+            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <a
+                href="mailto:brandon@openparkingmap.com"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <EnvelopeIcon className="w-5 h-5" />
+              </a>
+              <a
+                href="https://github.com/brandonfcohen1/openparkingmap/"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 mr-2"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <GithubIcon className="w-5 h-5" />
+              </a>
+            </div>
+          </Dialog.Panel>
         </div>
-      </Dialog>
-    </Transition.Root>
+      </div>
+    </Dialog>
   );
 }
