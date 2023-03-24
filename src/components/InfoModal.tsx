@@ -124,14 +124,16 @@ export default function InfoModal({
                   <a
                     href="mailto:brandon@openparkingmap.com"
                     className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
-                    target={"_blank"}
+                    target="_blank"
+                    rel="noreferrer noopener"
                   >
                     <EnvelopeIcon className="w-5 h-5" />
                   </a>
                   <a
                     href="https://github.com/brandonfcohen1/openparkingmap/"
                     className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 mr-2"
-                    target={"_blank"}
+                    target="_blank"
+                    rel="noreferrer noopener"
                   >
                     <GithubIcon className="w-5 h-5" />
                   </a>
