@@ -82,7 +82,7 @@ export default function InfoModal({
                         OpenParkingMap
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500">
                           {` This project was inspired by reading `}
                           <a
                             className="text-blue-600 hover:text-blue-800"
@@ -115,7 +115,7 @@ export default function InfoModal({
                           <br />
                           <br />
                           {`Get in touch with me below.`}
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </div>

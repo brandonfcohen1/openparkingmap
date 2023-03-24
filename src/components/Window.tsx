@@ -18,7 +18,7 @@ export const Window = ({
   setShowInfoModal,
 }: ParkingSearchProps) => {
   return (
-    <div className="fixed py-1 px-1 z-10">
+    <div className="fixed left-0 py-1 px-1 z-10 bottom-0 md:top-0">
       <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md w-80">
         <h2 className="text-2xl font-semibold mb-4 text-blue-500">
           <div style={{ display: "flex", alignItems: "center" }}>
