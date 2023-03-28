@@ -26,6 +26,7 @@ export const MainPage = () => {
   const [showZoomModal, setShowZoomModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [viewport, setViewport] = useState(initialViewState);
+  const [error, setError] = useState(false);
 
   const handleParkingSearch = async () => {
     if (viewport.zoom < 13) {
@@ -40,13 +41,22 @@ export const MainPage = () => {
     setLoading(true);
     setSavedBounds(bounds);
 
-    const parking = (await overpassQuery(bounds)) as FeatureCollection;
-    setParkingLots(parking);
-    setLoading(false);
+    try {
+      const parking = (await overpassQuery(bounds)) as FeatureCollection;
+      setParkingLots(parking);
+      setLoading(false);
 
-    const { totalParkingArea, boundArea } = analyzeParking({ parking, bounds });
-    setParkingArea(totalParkingArea);
-    setWindowBoundArea(boundArea);
+      const { totalParkingArea, boundArea } = analyzeParking({
+        parking,
+        bounds,
+      });
+      setParkingArea(totalParkingArea);
+      setWindowBoundArea(boundArea);
+      setError(false);
+    } catch (e) {
+      setLoading(false);
+      setError(true);
+    }
   };
 
   return (
@@ -58,6 +68,7 @@ export const MainPage = () => {
           parkingArea={parkingArea}
           windowBoundArea={windowBoundArea}
           setShowInfoModal={setShowInfoModal}
+          error={error}
         />
         <MainMap
           showZoomModal={showZoomModal}

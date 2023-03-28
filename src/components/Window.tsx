@@ -8,6 +8,7 @@ interface ParkingSearchProps {
   parkingArea: number;
   windowBoundArea: number;
   setShowInfoModal: (show: boolean) => void;
+  error: boolean;
 }
 
 export const Window = ({
@@ -16,6 +17,7 @@ export const Window = ({
   parkingArea,
   windowBoundArea,
   setShowInfoModal,
+  error,
 }: ParkingSearchProps) => {
   return (
     <div className="fixed left-0 py-1 px-1 z-10 bottom-0 md:top-0">
@@ -79,6 +81,11 @@ export const Window = ({
               </>
             )}
           </Disclosure>
+        )}
+        {error && (
+          <div className="text-red-500">
+            Error loading data. Please try again.
+          </div>
         )}
       </div>
     </div>
