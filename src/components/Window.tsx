@@ -43,7 +43,7 @@ export const Window = ({
             className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 cursor-pointer"
             onClick={handleParkingSearch}
           >
-            Show Surface Parking
+            Show At-Grade Parking
           </div>
         )}
 
@@ -60,7 +60,7 @@ export const Window = ({
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  <b>Surface Parking:</b> {parkingArea.toFixed(1)} ac
+                  <b>At-Grade Parking:</b> {parkingArea.toFixed(1)} ac
                   <br />
                   <b>Area in Window:</b> {windowBoundArea.toFixed(1)} ac
                   <br />
