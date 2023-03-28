@@ -4,13 +4,7 @@ import { FeatureCollection, Position, Feature } from "geojson";
 export const overpassQuery = async (bounds: LngLatBounds) => {
   const bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
 
-  const restrictTags = [
-    "underground",
-    "multi-storey",
-    "sheds",
-    "garage_boxes",
-    "carport",
-  ];
+  const restrictTags = ["underground"];
 
   const body = `
   [out:json][bbox:${bbox}];
