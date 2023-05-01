@@ -9,7 +9,7 @@ export const overpassQuery = async (bounds: LngLatBounds) => {
   const body = `
   [out:json][bbox:${bbox}];
   (way[amenity=parking]${restrictTags
-    .map((tag: string) => `[amenity!~"${tag}"]`)
+    .map((tag: string) => `[parking!~"${tag}"]`)
     .join("")};)->.x1;nwr.x1->.result;
   (.result; - .done;)->.result;
   .result out meta geom qt;
