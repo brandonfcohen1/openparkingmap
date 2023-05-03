@@ -72,7 +72,7 @@ export const Window = ({
                     {`Data is pulled from OpenStreetMap. `}
                     <a
                       onClick={() => setShowInfoModal(true)}
-                      className="text-blue-600 hover:text-blue-800"
+                      className="text-blue-600 hover:text-blue-800 cursor-pointer"
                     >
                       Details here.
                     </a>
