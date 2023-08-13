@@ -1,6 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { FeatureCollection } from "geojson";
 
 interface ParkingSearchProps {
   handleParkingSearch: () => void;
@@ -9,6 +10,7 @@ interface ParkingSearchProps {
   windowBoundArea: number;
   setShowInfoModal: (show: boolean) => void;
   error: boolean;
+  downloadData: () => void;
 }
 
 export const Window = ({
@@ -18,6 +20,7 @@ export const Window = ({
   windowBoundArea,
   setShowInfoModal,
   error,
+  downloadData,
 }: ParkingSearchProps) => {
   return (
     <div className="fixed left-0 py-1 px-1 z-10 bottom-0 md:top-0">
@@ -67,6 +70,13 @@ export const Window = ({
                   <b>% of window: </b>
                   {((parkingArea / windowBoundArea) * 100).toFixed(1)} %
                   <br />
+                  <br />
+                  <Disclosure.Button
+                    className="flex justify-between px-4 py-2 text-sm font-medium text-left text-blue-500 bg-gray-100 rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75"
+                    onClick={downloadData}
+                  >
+                    Download GeoJSON
+                  </Disclosure.Button>
                   <br />
                   <div className="max-w-sm w-44 text-xs italic">
                     {`Data is pulled from OpenStreetMap. `}
