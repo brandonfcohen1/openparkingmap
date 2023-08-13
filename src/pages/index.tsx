@@ -59,6 +59,20 @@ export const MainPage = () => {
     }
   };
 
+  const downloadData = () => {
+    const parkingData = JSON.stringify(parkingLots);
+    const parkingDataBlob = new Blob([parkingData], {
+      type: "application/json",
+    });
+    const parkingDataUrl = URL.createObjectURL(parkingDataBlob);
+    const link = document.createElement("a");
+    link.href = parkingDataUrl;
+    link.download = "parkingData.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <div className="map-page">
@@ -69,6 +83,7 @@ export const MainPage = () => {
           windowBoundArea={windowBoundArea}
           setShowInfoModal={setShowInfoModal}
           error={error}
+          downloadData={downloadData}
         />
         <MainMap
           showZoomModal={showZoomModal}
