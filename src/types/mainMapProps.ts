@@ -1,4 +1,4 @@
-import { Viewport } from "@/types/viewport";
+import { Viewport } from "@/types/Viewport";
 import { LngLatBounds } from "mapbox-gl";
 import { FeatureCollection } from "geojson";
 

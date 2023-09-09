@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
+import { InfoModalProps } from "@/types/InfoModalProps";
 
 import React from "react";
 
@@ -29,11 +30,6 @@ const LinkedinIcon = (props: any) => (
   </svg>
 );
 
-interface ModalProps {
-  showInfoModal: boolean;
-  setShowInfoModal: (showZoomModal: boolean) => void;
-}
-
 const Link = ({ href, children }: { href: string; children: any }) => (
   <a
     className="text-blue-600 hover:text-blue-800"
@@ -48,7 +44,7 @@ const Link = ({ href, children }: { href: string; children: any }) => (
 export default function InfoModal({
   showInfoModal,
   setShowInfoModal,
-}: ModalProps) {
+}: InfoModalProps) {
   const cancelButtonRef = useRef(null);
 
   return (

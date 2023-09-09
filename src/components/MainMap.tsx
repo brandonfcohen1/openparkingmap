@@ -7,7 +7,7 @@ import LoadingOverlay from "./LoadingOverlay";
 import ZoomModal from "./ZoomModal";
 import { lngLatBoundsToPolygon } from "@/analysis/latLngBoundsToPolygon";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import { MainMapProps } from "@/types/mainMapProps";
+import { MainMapProps } from "@/types/MainMapProps";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
