@@ -1,16 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-
-interface ParkingSearchProps {
-  handleParkingSearch: () => void;
-  loading: boolean;
-  parkingArea: number;
-  windowBoundArea: number;
-  setShowInfoModal: (show: boolean) => void;
-  error: boolean;
-  downloadData: () => void;
-}
+import { ParkingSearchProps } from "@/types/ParkingSearchProps";
 
 export const Window = ({
   handleParkingSearch,

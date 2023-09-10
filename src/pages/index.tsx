@@ -1,105 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { LngLatBounds } from "mapbox-gl";
-import { overpassQuery } from "@/overpass/overpass";
-import { FeatureCollection } from "geojson";
-import { Window } from "../components/Window";
-import { analyzeParking } from "@/analysis/analyzeParking";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { defaultViewport } from "@/config/defaults";
 
-import { MainMap } from "@/components/MainMap";
+const Home = () => {
+  const router = useRouter();
 
-const initialViewState = {
-  longitude: -118.482505,
-  latitude: 34.0248477,
-  zoom: 14,
+  const { longitude, latitude, zoom } = defaultViewport;
+
+  useEffect(() => {
+    router.replace(`/${latitude}/${longitude}/${zoom}`);
+  }, []);
+
+  return <div>Redirecting...</div>;
 };
 
-export const MainPage = () => {
-  const [bounds, setBounds] = useState<LngLatBounds>();
-  const [savedBounds, setSavedBounds] = useState<LngLatBounds>();
-  const [loading, setLoading] = useState(false);
-  const [parkingLots, setParkingLots] = useState({
-    type: "FeatureCollection",
-    features: [],
-  } as FeatureCollection);
-  const [parkingArea, setParkingArea] = useState(0);
-  const [windowBoundArea, setWindowBoundArea] = useState(0);
-  const [showZoomModal, setShowZoomModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
-  const [viewport, setViewport] = useState(initialViewState);
-  const [error, setError] = useState(false);
-
-  const handleParkingSearch = async () => {
-    if (viewport.zoom < 13) {
-      setShowZoomModal(true);
-      return;
-    }
-
-    if (!bounds) {
-      return;
-    }
-
-    setLoading(true);
-    setSavedBounds(bounds);
-
-    try {
-      const parking = (await overpassQuery(bounds)) as FeatureCollection;
-      setParkingLots(parking);
-      setLoading(false);
-
-      const { totalParkingArea, boundArea } = analyzeParking({
-        parking,
-        bounds,
-      });
-      setParkingArea(totalParkingArea);
-      setWindowBoundArea(boundArea);
-      setError(false);
-    } catch (e) {
-      setLoading(false);
-      setError(true);
-    }
-  };
-
-  const downloadData = () => {
-    const parkingData = JSON.stringify(parkingLots);
-    const parkingDataBlob = new Blob([parkingData], {
-      type: "application/json",
-    });
-    const parkingDataUrl = URL.createObjectURL(parkingDataBlob);
-    const link = document.createElement("a");
-    link.href = parkingDataUrl;
-    link.download = "parkingData.json";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  return (
-    <>
-      <div className="map-page">
-        <Window
-          handleParkingSearch={handleParkingSearch}
-          loading={loading}
-          parkingArea={parkingArea}
-          windowBoundArea={windowBoundArea}
-          setShowInfoModal={setShowInfoModal}
-          error={error}
-          downloadData={downloadData}
-        />
-        <MainMap
-          showZoomModal={showZoomModal}
-          setShowZoomModal={setShowZoomModal}
-          showInfoModal={showInfoModal}
-          setShowInfoModal={setShowInfoModal}
-          loading={loading}
-          parkingLots={parkingLots}
-          savedBounds={savedBounds}
-          setBounds={setBounds}
-          viewport={viewport}
-          setViewport={setViewport}
-        />
-      </div>
-    </>
-  );
-};
-
-export default MainPage;
+export default Home;

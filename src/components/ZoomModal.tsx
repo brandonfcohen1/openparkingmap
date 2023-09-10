@@ -1,13 +1,12 @@
 import { useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { ZoomModalProps } from "@/types/ZoomModalProps";
 
-interface ModalProps {
-  showZoomModal: boolean;
-  setShowZoomModal: (showZoomModal: boolean) => void;
-}
-
-export default function Modal({ showZoomModal, setShowZoomModal }: ModalProps) {
+export default function Modal({
+  showZoomModal,
+  setShowZoomModal,
+}: ZoomModalProps) {
   const cancelButtonRef = useRef(null);
 
   return (

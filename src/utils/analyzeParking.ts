@@ -1,12 +1,6 @@
-import { FeatureCollection } from "geojson";
-import { LngLatBounds } from "mapbox-gl";
 import { area } from "@turf/turf";
 import { lngLatBoundsToPolygon } from "./latLngBoundsToPolygon";
-
-interface ParkingAnalysis {
-  parking: FeatureCollection;
-  bounds: LngLatBounds;
-}
+import { ParkingAnalysis } from "@/types/ParkingAnalysis";
 
 const m2ToAcres = (m2: number) => {
   return m2 * 0.000247105;

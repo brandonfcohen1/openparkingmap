@@ -1,34 +1,16 @@
 import React, { useEffect, useRef } from "react";
-import mapboxgl, { LngLatBounds } from "mapbox-gl";
-import { FeatureCollection } from "geojson";
+import { useRouter } from "next/router";
+import mapboxgl from "mapbox-gl";
 import Map, { Source, Layer, GeolocateControl } from "react-map-gl";
 import InfoModal from "./InfoModal";
 import LoadingOverlay from "./LoadingOverlay";
 import ZoomModal from "./ZoomModal";
-import { lngLatBoundsToPolygon } from "@/analysis/latLngBoundsToPolygon";
+import { lngLatBoundsToPolygon } from "@/utils/latLngBoundsToPolygon";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { MainMapProps } from "@/types/MainMapProps";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
-
-interface Viewport {
-  longitude: number;
-  latitude: number;
-  zoom: number;
-}
-
-interface MainMapProps {
-  parkingLots: FeatureCollection;
-  loading: boolean;
-  savedBounds: LngLatBounds | undefined;
-  showZoomModal: boolean;
-  showInfoModal: boolean;
-  setShowZoomModal: (showZoomModal: boolean) => void;
-  setShowInfoModal: (showInfoModal: boolean) => void;
-  setBounds: (bounds: LngLatBounds) => void;
-  viewport: Viewport;
-  setViewport: (viewport: Viewport) => void;
-}
 
 export const MainMap = ({
   parkingLots,
@@ -41,10 +23,12 @@ export const MainMap = ({
   setBounds,
   viewport,
   setViewport,
+  mapRef,
 }: MainMapProps) => {
-  const mapRef = useRef<any>(null);
   const geocoderContainerRef = useRef<any>(null);
   const geolocateControlRef = useRef<any>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (mapRef.current) {
@@ -68,7 +52,13 @@ export const MainMap = ({
         });
       });
     }
-  }, [mapRef.current]);
+  }, [mapRef]);
+
+  const updateURL = (latitude: number, longitude: number, zoom: number) => {
+    router.replace(
+      `/${latitude.toFixed(7)}/${longitude.toFixed(7)}/${zoom.toFixed(2)}`
+    );
+  };
 
   return (
     <div className="map-container">
@@ -96,6 +86,11 @@ export const MainMap = ({
             latitude: e.target.getCenter().lat,
             zoom: e.target.getZoom(),
           });
+          updateURL(
+            e.target.getCenter().lat,
+            e.target.getCenter().lng,
+            e.target.getZoom()
+          );
         }}
         onRender={(e) => {
           setBounds(e.target.getBounds());
