@@ -5,7 +5,7 @@ import Map, { Source, Layer, GeolocateControl } from "react-map-gl";
 import InfoModal from "./InfoModal";
 import LoadingOverlay from "./LoadingOverlay";
 import ZoomModal from "./ZoomModal";
-import { lngLatBoundsToPolygon } from "@/analysis/latLngBoundsToPolygon";
+import { lngLatBoundsToPolygon } from "@/utils/latLngBoundsToPolygon";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import { MainMapProps } from "@/types/MainMapProps";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";

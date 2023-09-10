@@ -1,5 +1,6 @@
 import { area } from "@turf/turf";
 import { lngLatBoundsToPolygon } from "./latLngBoundsToPolygon";
+import { ParkingAnalysis } from "@/types/ParkingAnalysis";
 
 const m2ToAcres = (m2: number) => {
   return m2 * 0.000247105;

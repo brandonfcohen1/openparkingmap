@@ -4,7 +4,8 @@ import { LngLatBounds } from "mapbox-gl";
 import { overpassQuery } from "@/overpass/overpass";
 import { FeatureCollection } from "geojson";
 import { Window } from "@/components/Window";
-import { analyzeParking } from "@/analysis/analyzeParking";
+import { analyzeParking } from "@/utils/analyzeParking";
+import { validateViewport } from "@/utils/validateViewport";
 import { defaultViewport } from "@/config/defaults";
 import { MainMap } from "@/components/MainMap";
 
@@ -29,16 +30,17 @@ export const MainPage = () => {
   const { latitude, longitude, zoom } = router.query;
 
   useEffect(() => {
-    setViewport({
-      latitude: Number(latitude),
-      longitude: Number(longitude),
-      zoom: Number(zoom),
-    });
+    const isValidViewport = validateViewport(latitude, longitude, zoom);
 
-    if (mapRef.current) {
+    if (isValidViewport && mapRef.current) {
       const map = mapRef.current.getMap();
       map.jumpTo({
         center: [Number(longitude), Number(latitude)],
+        zoom: Number(zoom),
+      });
+      setViewport({
+        latitude: Number(latitude),
+        longitude: Number(longitude),
         zoom: Number(zoom),
       });
     }
