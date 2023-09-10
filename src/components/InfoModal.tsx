@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { InfoModalProps } from "@/types/InfoModalProps";
+import { Space } from "@/utils/Space";
 
 import React from "react";
 
@@ -69,13 +70,14 @@ export default function InfoModal({
                   </Dialog.Title>
                   <div className="mt-2">
                     <div className="text-sm text-gray-500">
+                      {`OpenParkingMap is a tool for visualizing parking lots in your area using data from OpenStreetMap.`}
+                      <Space />
                       {` This project was inspired by reading `}
                       <Link href="https://www.amazon.com/High-Cost-Free-Parking-Updated/dp/193236496X">
                         {` The High Cost of Free Parking`}
                       </Link>
                       {`, by Donald Shoup. From the description:`}
-                      <br />
-                      <br />
+                      <Space />
                       <blockquote className="pl-4 border-l-2 border-gray-400">
                         {`Planners mandate free parking to alleviate
                             congestion but end up distorting transportation
@@ -102,8 +104,10 @@ export default function InfoModal({
                         {`The Parking Reform Network`}
                       </Link>
                       {"."}
-                      <br />
-                      <br />
+                      <Space />
+                      <Link href="https://docs.google.com/document/d/1zkdJOf0GWJPLXuNRX8FdMbTHkyBArEOQh3CIuAtTeGM">{`Here`}</Link>
+                      {` is a resource from Parking Report Network that gives instructions on how to add parking lots to OpenStreetMap.`}
+                      <Space />
                       {`Get in touch with me below.`}
                     </div>
                   </div>
