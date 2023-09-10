@@ -7,7 +7,7 @@ import LoadingOverlay from "./LoadingOverlay";
 import ZoomModal from "./ZoomModal";
 import { lngLatBoundsToPolygon } from "@/utils/latLngBoundsToPolygon";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import { MainMapProps } from "@/types/MainMapProps";
+import { MapProps } from "@/types/MapProps";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
@@ -24,7 +24,7 @@ export const MainMap = ({
   viewport,
   setViewport,
   mapRef,
-}: MainMapProps) => {
+}: MapProps) => {
   const geocoderContainerRef = useRef<any>(null);
   const geolocateControlRef = useRef<any>(null);
 

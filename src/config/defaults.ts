@@ -1,4 +1,4 @@
-import { Viewport } from "@/types/Viewport";
+import { Viewport } from "@/types/ViewportProps";
 
 export const defaultViewport: Viewport = {
   longitude: -118.482505,
