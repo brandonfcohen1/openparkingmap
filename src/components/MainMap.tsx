@@ -52,7 +52,7 @@ export const MainMap = ({
         });
       });
     }
-  }, [mapRef.current]);
+  }, [mapRef]);
 
   const updateURL = (latitude: number, longitude: number, zoom: number) => {
     router.replace(
