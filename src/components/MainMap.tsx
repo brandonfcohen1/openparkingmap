@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import mapboxgl from "mapbox-gl";
 import Map, { Source, Layer, GeolocateControl } from "react-map-gl";
@@ -27,13 +27,13 @@ export const MainMap = ({
 }: MapProps) => {
   const geocoderContainerRef = useRef<any>(null);
   const geolocateControlRef = useRef<any>(null);
+  const [mapInstance, setMapInstance] = useState<any>();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (mapRef.current) {
-      const map = mapRef.current?.getMap();
-      const center = map.getCenter();
+    if (mapInstance) {
+      const center = mapInstance.getCenter();
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
@@ -46,13 +46,13 @@ export const MainMap = ({
       geocoder.addTo(geocoderContainerRef.current);
 
       geocoder.on("result", (e) => {
-        map.flyTo({
+        mapInstance.flyTo({
           center: e.result.center,
           zoom: 14,
         });
       });
     }
-  }, [mapRef]);
+  }, [mapInstance]);
 
   const updateURL = (latitude: number, longitude: number, zoom: number) => {
     router.replace(
@@ -96,6 +96,9 @@ export const MainMap = ({
           setBounds(e.target.getBounds());
         }}
         ref={mapRef}
+        onLoad={(e) => {
+          setMapInstance(e.target);
+        }}
       >
         <div className="z-1 absolute bottom-4 left-4">
           <GeolocateControl
