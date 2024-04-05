@@ -1,5 +1,5 @@
 export interface ParkingSearchProps {
-  handleParkingSearch: () => void;
+  handleParkingSearch: (restrictTags: { key: string; tag: string }[]) => void;
   loading: boolean;
   parkingArea: number;
   windowBoundArea: number;
