@@ -7,8 +7,6 @@ export const overpassQuery = async (
 ) => {
   const bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
 
-  const restrictTags = ["underground"];
-
   const body = `
   [out:json][bbox:${bbox}];
   (

@@ -3,7 +3,7 @@ import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { ParkingSearchProps } from "@/types/ParkingSearchProps";
-import { CheckBox } from "./CheckBox";
+import { CheckBox } from "@/components/CheckBox";
 
 export const Window = ({
   handleParkingSearch,
