@@ -1,7 +1,10 @@
 import { LngLatBounds } from "mapbox-gl";
 import { FeatureCollection, Position, Feature, Geometry } from "geojson";
 
-export const overpassQuery = async (bounds: LngLatBounds) => {
+export const overpassQuery = async (
+  bounds: LngLatBounds,
+  restrictParkingTags: { key: string; tag: string }[]
+) => {
   const bbox = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
 
   const restrictTags = ["underground"];
@@ -9,12 +12,12 @@ export const overpassQuery = async (bounds: LngLatBounds) => {
   const body = `
   [out:json][bbox:${bbox}];
   (
-    way[amenity=parking]${restrictTags
-      .map((tag) => `[parking!~"${tag}"]`)
+    way[amenity=parking]${restrictParkingTags
+      .map(({ key, tag }) => `[${key}!~"${tag}"]`)
       .join("")};
-    relation[amenity=parking]${restrictTags
-      .map((tag) => `[parking!~"${tag}"]`)
-      .join("")};    
+    relation[amenity=parking]${restrictParkingTags
+      .map(({ key, tag }) => `[${key}!~"${tag}"]`)
+      .join("")};      
   )->.x1;
   nwr.x1->.result;
   (.result; - .done;)->.result;

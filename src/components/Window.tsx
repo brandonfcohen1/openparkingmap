@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { ParkingSearchProps } from "@/types/ParkingSearchProps";
+import { CheckBox } from "./CheckBox";
 
 export const Window = ({
   handleParkingSearch,
@@ -12,6 +14,16 @@ export const Window = ({
   error,
   downloadData,
 }: ParkingSearchProps) => {
+  const [excludeStreetSide, setExcludeStreetSide] = useState(false);
+  const [excludePrivate, setExcludePrivate] = useState(false);
+  const getRestrictedTags = () => {
+    const restrictedTags = [{ key: "parking", tag: "underground" }];
+    if (excludeStreetSide)
+      restrictedTags.push({ key: "parking", tag: "street_side" });
+    if (excludePrivate) restrictedTags.push({ key: "access", tag: "private" });
+    return restrictedTags;
+  };
+
   return (
     <div className="fixed left-0 py-1 px-1 z-10 bottom-0 md:top-0">
       <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md w-80">
@@ -32,12 +44,28 @@ export const Window = ({
             loading...
           </div>
         ) : (
-          <div
-            className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 cursor-pointer"
-            onClick={handleParkingSearch}
-          >
-            Show At-Grade Parking
-          </div>
+          <>
+            <div
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 cursor-pointer"
+              onClick={() => handleParkingSearch(getRestrictedTags())}
+            >
+              Show At-Grade Parking
+            </div>
+
+            <CheckBox
+              isChecked={excludeStreetSide}
+              setIsChecked={setExcludeStreetSide}
+            >
+              Exclude street-side parking
+            </CheckBox>
+
+            <CheckBox
+              isChecked={excludePrivate}
+              setIsChecked={setExcludePrivate}
+            >
+              Exclude private parking
+            </CheckBox>
+          </>
         )}
 
         {parkingArea > 0 && (

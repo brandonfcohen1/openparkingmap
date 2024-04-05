@@ -46,7 +46,9 @@ export const MainPage = () => {
     }
   }, [latitude, longitude, zoom]);
 
-  const handleParkingSearch = async () => {
+  const handleParkingSearch = async (
+    restrictTags: { key: string; tag: string }[]
+  ) => {
     if (viewport.zoom < 13) {
       setShowZoomModal(true);
       return;
@@ -60,7 +62,7 @@ export const MainPage = () => {
     setSavedBounds(bounds);
 
     try {
-      const parking = (await overpassQuery(bounds)) as FeatureCollection;
+      const parking = await overpassQuery(bounds, restrictTags);
       setParkingLots(parking);
       setLoading(false);
 
