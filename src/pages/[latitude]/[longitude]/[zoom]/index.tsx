@@ -8,6 +8,7 @@ import { analyzeParking } from "@/utils/analyzeParking";
 import { validateViewport } from "@/utils/validateViewport";
 import { defaultViewport } from "@/config/defaults";
 import { MainMap } from "@/components/MainMap";
+import { MapRef } from "react-map-gl";
 
 export const MainPage = () => {
   const [bounds, setBounds] = useState<LngLatBounds>();
@@ -23,28 +24,36 @@ export const MainPage = () => {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [viewport, setViewport] = useState(defaultViewport);
   const [error, setError] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<MapRef>(null);
 
   const router = useRouter();
   const { latitude, longitude, zoom } = router.query;
 
   useEffect(() => {
     const isValidViewport = validateViewport(latitude, longitude, zoom);
+    const lat = Number(latitude);
+    const lng = Number(longitude);
+    const z = Number(zoom);
 
     if (isValidViewport && mapRef.current) {
-      const map = mapRef.current.getMap();
-      map.jumpTo({
-        center: [Number(longitude), Number(latitude)],
-        zoom: Number(zoom),
-      });
       setViewport({
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-        zoom: Number(zoom),
+        latitude: lat,
+        longitude: lng,
+        zoom: z,
       });
+
+      if (!initialized) {
+        const map = mapRef.current.getMap();
+        map.jumpTo({
+          center: [lng, lat],
+          zoom: z,
+        });
+        setInitialized(true);
+      }
     }
-  }, [latitude, longitude, zoom]);
+  }, [initialized, latitude, longitude, zoom]);
 
   const handleParkingSearch = async (
     restrictTags: { key: string; tag: string }[]
