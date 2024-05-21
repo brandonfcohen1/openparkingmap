@@ -17,6 +17,7 @@ export const CheckBox = ({
       type="checkbox"
       className="mb-3 cursor-pointer"
       checked={isChecked}
+      readOnly
     />
     <label className="text-blue-500 m-3 select-none cursor-pointer">
       {children}
