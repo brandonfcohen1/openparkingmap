@@ -8,7 +8,6 @@ import { analyzeParking } from "@/utils/analyzeParking";
 import { validateViewport } from "@/utils/validateViewport";
 import { defaultViewport } from "@/config/defaults";
 import { MainMap } from "@/components/MainMap";
-import { MapRef } from "react-map-gl";
 
 export const MainPage = () => {
   const [bounds, setBounds] = useState<LngLatBounds>();
@@ -26,34 +25,23 @@ export const MainPage = () => {
   const [error, setError] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const mapRef = useRef<MapRef>(null);
-
   const router = useRouter();
   const { latitude, longitude, zoom } = router.query;
 
+  // Init map location from URL
   useEffect(() => {
+    if (initialized) return;
+
     const isValidViewport = validateViewport(latitude, longitude, zoom);
-    const lat = Number(latitude);
-    const lng = Number(longitude);
-    const z = Number(zoom);
+    if (!isValidViewport) return;
 
-    if (isValidViewport && mapRef.current) {
-      setViewport({
-        latitude: lat,
-        longitude: lng,
-        zoom: z,
-      });
-
-      if (!initialized) {
-        const map = mapRef.current.getMap();
-        map.jumpTo({
-          center: [lng, lat],
-          zoom: z,
-        });
-        setInitialized(true);
-      }
-    }
-  }, [initialized, latitude, longitude, zoom]);
+    setViewport({
+      latitude: Number(latitude),
+      longitude: Number(longitude),
+      zoom: Number(zoom),
+    });
+    setInitialized(true);
+  }, [initialized, latitude, longitude, setViewport, zoom]);
 
   const handleParkingSearch = async (
     restrictTags: { key: string; tag: string }[]
@@ -114,19 +102,20 @@ export const MainPage = () => {
           error={error}
           downloadData={downloadData}
         />
-        <MainMap
-          showZoomModal={showZoomModal}
-          setShowZoomModal={setShowZoomModal}
-          showInfoModal={showInfoModal}
-          setShowInfoModal={setShowInfoModal}
-          loading={loading}
-          parkingLots={parkingLots}
-          savedBounds={savedBounds}
-          setBounds={setBounds}
-          viewport={viewport}
-          setViewport={setViewport}
-          mapRef={mapRef}
-        />
+        {initialized && (
+          <MainMap
+            showZoomModal={showZoomModal}
+            setShowZoomModal={setShowZoomModal}
+            showInfoModal={showInfoModal}
+            setShowInfoModal={setShowInfoModal}
+            loading={loading}
+            parkingLots={parkingLots}
+            savedBounds={savedBounds}
+            setBounds={setBounds}
+            viewport={viewport}
+            setViewport={setViewport}
+          />
+        )}
       </div>
     </>
   );

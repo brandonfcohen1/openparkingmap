@@ -23,7 +23,6 @@ export const MainMap = ({
   setBounds,
   viewport,
   setViewport,
-  mapRef,
 }: MapProps) => {
   const geocoderContainerRef = useRef<any>(null);
   const geolocateControlRef = useRef<any>(null);
@@ -94,13 +93,8 @@ export const MainMap = ({
           updateURL(latitude, longitude, zoom);
           saveLocation(latitude, longitude, zoom);
         }}
-        onRender={(e) => {
-          setBounds(e.target.getBounds());
-        }}
-        ref={mapRef}
-        onLoad={(e) => {
-          setMapInstance(e.target);
-        }}
+        onRender={(e) => setBounds(e.target.getBounds())}
+        onLoad={(e) => setMapInstance(e.target)}
       >
         <div className="z-1 absolute bottom-4 left-4">
           <GeolocateControl
