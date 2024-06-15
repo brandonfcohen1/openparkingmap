@@ -1,6 +1,7 @@
 import { ViewportProps } from "@/types/ViewportProps";
 import { LngLatBounds } from "mapbox-gl";
 import { FeatureCollection } from "geojson";
+import { MapRef } from "react-map-gl";
 
 export interface MapProps {
   parkingLots: FeatureCollection;
@@ -13,5 +14,5 @@ export interface MapProps {
   setBounds: (bounds: LngLatBounds) => void;
   viewport: ViewportProps;
   setViewport: (viewport: ViewportProps) => void;
-  mapRef: React.RefObject<any>;
+  mapRef: React.RefObject<MapRef>;
 }
