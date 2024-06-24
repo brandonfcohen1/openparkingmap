@@ -23,7 +23,6 @@ export const MainMap = ({
   setBounds,
   viewport,
   setViewport,
-  mapRef,
 }: MapProps) => {
   const geocoderContainerRef = useRef<any>(null);
   const geolocateControlRef = useRef<any>(null);
@@ -60,6 +59,12 @@ export const MainMap = ({
     );
   };
 
+  const saveLocation = (latitude: number, longitude: number, zoom: number) => {
+    localStorage.setItem("latitude", latitude.toFixed(7));
+    localStorage.setItem("longitude", longitude.toFixed(7));
+    localStorage.setItem("zoom", zoom.toFixed(2));
+  };
+
   return (
     <div className="map-container">
       {loading && <LoadingOverlay />}
@@ -81,24 +86,15 @@ export const MainMap = ({
         mapStyle="mapbox://styles/mapbox/streets-v11"
         onMoveEnd={async (e) => {
           setBounds(e.target.getBounds());
-          setViewport({
-            longitude: e.target.getCenter().lng,
-            latitude: e.target.getCenter().lat,
-            zoom: e.target.getZoom(),
-          });
-          updateURL(
-            e.target.getCenter().lat,
-            e.target.getCenter().lng,
-            e.target.getZoom()
-          );
+          const latitude = e.target.getCenter().lat;
+          const longitude = e.target.getCenter().lng;
+          const zoom = e.target.getZoom();
+          setViewport({ latitude, longitude, zoom });
+          updateURL(latitude, longitude, zoom);
+          saveLocation(latitude, longitude, zoom);
         }}
-        onRender={(e) => {
-          setBounds(e.target.getBounds());
-        }}
-        ref={mapRef}
-        onLoad={(e) => {
-          setMapInstance(e.target);
-        }}
+        onRender={(e) => setBounds(e.target.getBounds())}
+        onLoad={(e) => setMapInstance(e.target)}
       >
         <div className="z-1 absolute bottom-4 left-4">
           <GeolocateControl

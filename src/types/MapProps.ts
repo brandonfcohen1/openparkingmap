@@ -14,5 +14,4 @@ export interface MapProps {
   setBounds: (bounds: LngLatBounds) => void;
   viewport: ViewportProps;
   setViewport: (viewport: ViewportProps) => void;
-  mapRef: React.RefObject<MapRef>;
 }
